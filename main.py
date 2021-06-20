@@ -1,10 +1,11 @@
 from netCDF4 import Dataset
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib
 
 
 
-def combine_data(dataset, dataweights, lon, lat, time, title):
+def combine_data(dataset, dataweights, lon, lat, time, title, cmap):
     time_iteration = 0
     for time_hr in time:
         weighted_sum = np.zeros((len(lat), len(lon)))
@@ -13,12 +14,12 @@ def combine_data(dataset, dataweights, lon, lat, time, title):
             weighted_array = np.multiply(array, weight)
             weighted_sum = weighted_array + weighted_sum
         time_iteration+=1
-
-        plt.imshow(weighted_sum, interpolation='gaussian', cmap='inferno', extent=[min(lon), max(lon), min(lat), max(lat)])
+        print(weighted_sum)
+        plt.imshow(weighted_sum, interpolation='gaussian', cmap=cmap, extent=[min(lon), max(lon), min(lat), max(lat)])
         plt.xlabel('Longitude')
         plt.ylabel('Latitude')
         plt.title(title.format(time_hr))
-        plt.show()
+        plt.savefig(('./images/{}.png').format(title.format(time_hr)))
 
 
 
@@ -46,11 +47,11 @@ pollen_data_weights = [1, 1, 1, 1, 1, 1]
 pollen_dataset = [mpg_conc, apg_conc, bpg_conc, gpg_conc, opg_conc, rwpg_conc, dust, nmvoc_conc, o3_conc, pm10_conc]
 pollen_set_name = ['mpg_conc', 'apg_conc', 'bpg_conc', 'gpg_conc', 'opg_conc', 'rwpg_conc']
 
-combine_data(pollen_dataset, pollen_data_weights, lon, lat, time, 'Pollen concentration at T={}')
+combine_data(pollen_dataset, pollen_data_weights, lon, lat, time, 'Pollen concentration at T={}', 'inferno')
 
 
 pollutants_data_weights = [1, 1, 1, 1]
 pollutants_dataset = [dust, nmvoc_conc, o3_conc, pm10_conc]
 pollutants_set_name = ['dust', 'nmvoc_conc', 'o3_conc', 'pm10_conc']
 
-combine_data(pollutants_dataset, pollutants_data_weights, lon, lat, time, 'Pollutant concentration at T={}')
+combine_data(pollutants_dataset, pollutants_data_weights, lon, lat, time, 'Pollutant concentration at T={}', matplotlib.colors.LinearSegmentedColormap.from_list("", ["green", "yellow", "red"]))
