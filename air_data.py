@@ -53,4 +53,5 @@ pollutants_data_weights = [1, 1, 1, 1]
 pollutants_dataset = [dust, nmvoc_conc, o3_conc, pm10_conc]
 pollutants_set_name = ['dust', 'nmvoc_conc', 'o3_conc', 'pm10_conc']
 
-combine_data(pollutants_dataset, pollutants_data_weights, lon, lat, time, 'Pollutant concentration at T={}', matplotlib.colors.LinearSegmentedColormap.from_list("", ["green", "yellow", "red"]))
+combine_data(pollutants_dataset, pollutants_data_weights, lon, lat, time, 'Pollutant concentration at T={}',
+             matplotlib.colors.LinearSegmentedColormap.from_list("", ["green", "yellow", "red"]))

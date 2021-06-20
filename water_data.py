@@ -1,8 +1,7 @@
 from netCDF4 import Dataset
 import numpy as np
 import matplotlib.pyplot as plt
-import pandas as pd
-import math
+
 
 def make_plt(VHM0, lon, lat, X, Y, dx, dy, time_iter):
 
